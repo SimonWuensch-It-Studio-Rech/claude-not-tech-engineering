@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "name": "claude-not-tech-engineering",
+  "description": "No-Tech Agentic Engineering Toolkit — Produkte bauen ohne technisches Wissen",
+  "base_url": "https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main",
+  "install": {
+    "skills": {
+      "description": "Claude Code Skills — in ~/.claude/commands/ kopieren (global) oder .claude/commands/ (nur dieses Projekt)",
+      "target_global": "~/.claude/commands/",
+      "target_project": ".claude/commands/",
+      "files": [
+        "skills/no-tech.md",
+        "skills/no-tech-load-context.md",
+        "skills/no-tech-problem-statement.md",
+        "skills/no-tech-to-prd.md",
+        "skills/no-tech-grill-with-docs.md",
+        "skills/no-tech-prototype.md",
+        "skills/no-tech-to-issues.md",
+        "skills/create-user-persona.md"
+      ]
+    },
+    "workspace": {
+      "description": "Projektordner — als 'claude-vault/' in dein Projekt kopieren",
+      "target": "claude-vault/",
+      "files": [
+        "workspace/CLAUDE.md",
+        "workspace/no-tech-workflow.md",
+        "workspace/personas/die-gruenderin.md",
+        "workspace/personas/der-fachexperte.md",
+        "workspace/personas/die-prozess-optimiererin.md",
+        "workspace/personas/der-kreative.md",
+        "workspace/claude-data/index.md",
+        "workspace/claude-data/_templates/feature-README.md",
+        "workspace/claude-data/_templates/feature-tech.md",
+        "workspace/claude-data/_templates/prd.md"
+      ]
+    }
+  },
+  "after_install": {
+    "message": "Installation abgeschlossen. Tippe /no-tech um zu starten.",
+    "first_command": "/no-tech"
+  }
+}

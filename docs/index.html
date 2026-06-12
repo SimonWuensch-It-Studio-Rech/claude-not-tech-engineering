@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>claude-not-tech-engineering — Produkte bauen ohne Programmierkenntnisse</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #e8e8e8;
+      --muted: #888;
+      --accent: #d97706;
+      --accent-light: #fbbf24;
+      --green: #22c55e;
+      --code-bg: #111;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .container { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+    /* Nav */
+    nav {
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+    }
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: monospace;
+      font-size: 14px;
+      color: var(--accent-light);
+      text-decoration: none;
+    }
+    .nav-link {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .nav-link:hover { color: var(--text); }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(217, 119, 6, 0.15);
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      color: var(--accent-light);
+      font-size: 12px;
+      font-family: monospace;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      letter-spacing: 0.05em;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      letter-spacing: -0.02em;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent-light);
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 40px;
+    }
+
+    /* Install Box */
+    .install-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      margin: 0 auto 80px;
+      max-width: 600px;
+      text-align: left;
+    }
+    .install-box h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .install-box .step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+    .step-num {
+      background: var(--accent);
+      color: #000;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .step-content p {
+      font-size: 14px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    .step-content strong {
+      color: var(--text);
+      font-size: 15px;
+    }
+    .prompt-block {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0 0;
+      position: relative;
+    }
+    .prompt-block pre {
+      font-family: monospace;
+      font-size: 13px;
+      color: var(--accent-light);
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.5;
+    }
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--border);
+      border: none;
+      color: var(--muted);
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s;
+    }
+    .copy-btn:hover { background: #3a3a3a; color: var(--text); }
+    .copy-btn.copied { background: #166534; color: var(--green); }
+
+    /* What you get */
+    section { padding: 60px 0; border-top: 1px solid var(--border); }
+    section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 15px;
+      margin-bottom: 32px;
+    }
+
+    /* Phases */
+    .phases { display: grid; gap: 16px; }
+    .phase {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .phase-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+      width: 40px;
+      text-align: center;
+    }
+    .phase h3 {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .phase p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Skills table */
+    .skills-grid { display: grid; gap: 10px; }
+    .skill-row {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .skill-name {
+      font-family: monospace;
+      font-size: 13px;
+      color: var(--accent-light);
+      min-width: 220px;
+      flex-shrink: 0;
+    }
+    .skill-desc {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Personas */
+    .personas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+    }
+    .persona-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .persona-card .emoji { font-size: 28px; margin-bottom: 10px; display: block; }
+    .persona-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+    .persona-card p { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+    /* Division */
+    .division {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .division-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .division-row:last-child { border-bottom: none; }
+    .division-cell {
+      padding: 14px 20px;
+      font-size: 14px;
+    }
+    .division-cell:first-child {
+      border-right: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .division-cell:last-child { color: var(--text); }
+    .division-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #222;
+      border-bottom: 1px solid var(--border);
+    }
+    .division-header span {
+      padding: 10px 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .division-header span:first-child { border-right: 1px solid var(--border); }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 32px 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* Hidden manifest — for Claude to read */
+    #install-manifest { display: none; }
+
+    @media (max-width: 600px) {
+      .skill-row { flex-direction: column; gap: 4px; }
+      .skill-name { min-width: unset; }
+      .division-row, .division-header { grid-template-columns: 1fr; }
+      .division-cell:first-child, .division-header span:first-child {
+        border-right: none; border-bottom: 1px solid var(--border);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <a href="#" class="nav-logo">claude-not-tech-engineering</a>
+    <a href="https://github.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering" class="nav-link" target="_blank">GitHub →</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-badge">Claude Code Toolkit</div>
+    <h1>Produkte bauen<br>ohne <em>Programmierkenntnisse</em></h1>
+    <p>Du beschreibst deine Idee. Claude baut sie — Schritt für Schritt, ohne dass du je etwas Technisches wissen musst.</p>
+  </div>
+
+  <!-- Install Box -->
+  <div class="install-box">
+    <h2>So installierst du</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <strong>Claude Code öffnen</strong>
+        <p>Öffne Claude Code in deinem Projekt-Ordner.</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <strong>Diesen Prompt einfügen</strong>
+        <p>Kopiere den Text unten und füge ihn in Claude Code ein — Claude installiert alles automatisch.</p>
+        <div class="prompt-block">
+          <pre id="install-prompt">Installiere das claude-not-tech-engineering Toolkit in diesem Projekt.
+
+Lies dafür die Installationsanweisungen von dieser Seite:
+https://simonwuensch-it-studio-rech.github.io/claude-not-tech-engineering/
+
+Installiere:
+1. Alle Skills aus dem Abschnitt "install-manifest" in ~/.claude/commands/
+2. Den Workspace-Ordner als claude-vault/ in das aktuelle Verzeichnis
+
+Danach bestätige was installiert wurde.</pre>
+          <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <strong>Starten</strong>
+        <p>Nach der Installation einfach <code style="font-family:monospace;color:var(--accent-light)">/no-tech</code> eingeben — das war's.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <section>
+    <h2>Wie es funktioniert</h2>
+    <p class="section-sub">Drei Phasen — du redest, Claude baut.</p>
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-icon">💬</div>
+        <div>
+          <h3>Phase 1 — Erzählen</h3>
+          <p>Claude stellt dir Fragen zu deiner Idee — eine nach der anderen, in deiner Sprache. Kein Fachbegriff nötig. Am Ende eine kurze Zusammenfassung: "Stimmt das so?"</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-icon">🖥️</div>
+        <div>
+          <h3>Phase 2 — Anschauen</h3>
+          <p>Claude baut ein klickbares Mockup und öffnet es direkt im Browser. Du klickst durch und sagst was stimmt und was fehlt. Sehen ist besser als beschreiben.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-icon">⚙️</div>
+        <div>
+          <h3>Phase 3 — Bauen</h3>
+          <p>Claude baut Baustein für Baustein. Nach jedem Schritt startet es die App im Browser — du testest sofort. Kein Warten, kein Raten.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="phase-icon">🔧</div>
+        <div>
+          <h3>Bug-Fix &amp; Neue Funktionen</h3>
+          <p>Etwas stimmt nicht? Claude analysiert selbst, behebt und testet. Neue Funktion gewünscht? Claude liest den bestehenden Code, stellt nur die nötigsten Fragen — und baut.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Division of work -->
+  <section>
+    <h2>Wer macht was</h2>
+    <p class="section-sub">Du entscheidest was — Claude entscheidet wie.</p>
+    <div class="division">
+      <div class="division-header">
+        <span>Du</span>
+        <span>Claude</span>
+      </div>
+      <div class="division-row">
+        <div class="division-cell">Deine Idee beschreiben</div>
+        <div class="division-cell">Alle technischen Entscheidungen</div>
+      </div>
+      <div class="division-row">
+        <div class="division-cell">Fachliche Fragen beantworten</div>
+        <div class="division-cell">Technologie, Datenbank, Hosting wählen</div>
+      </div>
+      <div class="division-row">
+        <div class="division-cell">Mockup durchklicken</div>
+        <div class="division-cell">Mockup bauen &amp; Browser öffnen</div>
+      </div>
+      <div class="division-row">
+        <div class="division-cell">Testen &amp; "Passt" oder "Fehlt X" sagen</div>
+        <div class="division-cell">Code schreiben, Probleme selbst lösen</div>
+      </div>
+    </div>
+    <p style="font-size:13px;color:var(--muted);margin-top:16px;">Du wirst nie gefragt: Welche Technologie? Wie werden Daten gespeichert? Wo läuft das?</p>
+  </section>
+
+  <!-- Skills -->
+  <section>
+    <h2>Was installiert wird</h2>
+    <p class="section-sub">8 Skills in dein globales Claude Code — einmalig, dann überall nutzbar.</p>
+    <div class="skills-grid">
+      <div class="skill-row">
+        <span class="skill-name">/no-tech</span>
+        <span class="skill-desc">Haupt-Orchestrator — startet und steuert alles</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">/create-user-persona</span>
+        <span class="skill-desc">Einmaliges Profil — Claude kennt danach dein Fachgebiet</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">no-tech-load-context</span>
+        <span class="skill-desc">Lädt Projektstand automatisch beim Session-Start</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">no-tech-problem-statement</span>
+        <span class="skill-desc">Idee in ein scharfes Problem verwandeln</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">no-tech-to-prd</span>
+        <span class="skill-desc">Produktanforderungen ohne technische Fragen</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">no-tech-grill-with-docs</span>
+        <span class="skill-desc">Lücken im Plan finden — bevor gebaut wird</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">no-tech-prototype</span>
+        <span class="skill-desc">Klickbares HTML-Mockup bauen</span>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">no-tech-to-issues</span>
+        <span class="skill-desc">Plan in Bausteine zerlegen — in deiner Sprache</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Personas -->
+  <section>
+    <h2>Für wen</h2>
+    <p class="section-sub">Claude erkennt automatisch welcher Typ du bist und passt Fragen und Sprache an.</p>
+    <div class="personas-grid">
+      <div class="persona-card">
+        <span class="emoji">🚀</span>
+        <h3>Die Gründerin</h3>
+        <p>Baut ihr erstes Produkt. Kennt ihre Kunden, will schnell starten.</p>
+      </div>
+      <div class="persona-card">
+        <span class="emoji">🎓</span>
+        <h3>Der Fachexperte</h3>
+        <p>Arzt, Berater, Anwalt. Will sein Wissen als Tool skalieren.</p>
+      </div>
+      <div class="persona-card">
+        <span class="emoji">⚡</span>
+        <h3>Die Prozess-Optimiererin</h3>
+        <p>Ertrinkt in manuellen Aufgaben. Will automatisieren, Zeit sparen.</p>
+      </div>
+      <div class="persona-card">
+        <span class="emoji">🎨</span>
+        <h3>Der Kreative</h3>
+        <p>Designer, Fotograf, Creator. Will ein Tool das so aussieht wie er sich's vorstellt.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Machine-readable install manifest for Claude -->
+<section id="install-manifest" aria-hidden="true">
+  <!--
+    CLAUDE INSTALL MANIFEST
+    Version: 1.0.0
+    Base URL: https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main
+
+    SKILLS (copy to ~/.claude/commands/):
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-load-context.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-problem-statement.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-to-prd.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-grill-with-docs.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-prototype.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-to-issues.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/create-user-persona.md
+
+    WORKSPACE (copy as claude-vault/ into project):
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/CLAUDE.md → claude-vault/CLAUDE.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/no-tech-workflow.md → claude-vault/no-tech-workflow.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/personas/die-gruenderin.md → claude-vault/personas/die-gruenderin.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/personas/der-fachexperte.md → claude-vault/personas/der-fachexperte.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/personas/die-prozess-optimiererin.md → claude-vault/personas/die-prozess-optimiererin.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/personas/der-kreative.md → claude-vault/personas/der-kreative.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/claude-data/index.md → claude-vault/claude-data/index.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/claude-data/_templates/feature-README.md → claude-vault/claude-data/_templates/feature-README.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/claude-data/_templates/feature-tech.md → claude-vault/claude-data/_templates/feature-tech.md
+    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/claude-data/_templates/prd.md → claude-vault/claude-data/_templates/prd.md
+
+    AFTER INSTALL: Tell user to run /no-tech
+  -->
+</section>
+
+<footer>
+  <div class="container">
+    <p>
+      <a href="https://github.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering" target="_blank">GitHub</a>
+      &nbsp;·&nbsp;
+      MIT License
+      &nbsp;·&nbsp;
+      Gebaut mit Claude Code
+    </p>
+  </div>
+</footer>
+
+<script>
+  function copyPrompt(btn) {
+    const text = document.getElementById('install-prompt').textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Kopiert ✓';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Kopieren';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+</script>
+
+</body>
+</html>
