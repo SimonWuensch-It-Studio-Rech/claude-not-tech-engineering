@@ -294,8 +294,6 @@
     footer a { color: var(--muted); text-decoration: none; }
     footer a:hover { color: var(--text); }
 
-    /* Hidden manifest — for Claude to read */
-    #install-manifest { display: none; }
 
     @media (max-width: 600px) {
       .skill-row { flex-direction: column; gap: 4px; }
@@ -343,16 +341,15 @@
         <strong>Diesen Prompt einfügen</strong>
         <p>Kopiere den Text unten und füge ihn in Claude Code ein — Claude installiert alles automatisch.</p>
         <div class="prompt-block">
-          <pre id="install-prompt">Installiere das claude-not-tech-engineering Toolkit in diesem Projekt.
+          <pre id="install-prompt">Installiere das No-Tech Engineering Toolkit in diesem Projekt.
 
-Lies dafür die Installationsanweisungen von dieser Seite:
-https://simonwuensch-it-studio-rech.github.io/claude-not-tech-engineering/
-
-Installiere:
-1. Alle Skills aus dem Abschnitt "install-manifest" in ~/.claude/commands/
-2. Den Workspace-Ordner als claude-vault/ in das aktuelle Verzeichnis
-
-Danach bestätige was installiert wurde.</pre>
+Geh so vor:
+1. Zeig mir kurz in welchem Ordner ich bin und frag ob das der richtige ist
+2. Klone das Repository: git clone --depth 1 https://github.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering.git .tmp-vault-install
+3. Kopiere alle Dateien aus .tmp-vault-install/skills/ nach ~/.claude/commands/
+4. Kopiere .tmp-vault-install/workspace/ als claude-vault/ in das aktuelle Verzeichnis
+5. Lösche .tmp-vault-install/
+6. Bestätige kurz was installiert wurde und empfehle /no-tech als ersten Befehl</pre>
           <button class="copy-btn" onclick="copyPrompt(this)">Kopieren</button>
         </div>
       </div>
@@ -502,38 +499,6 @@ Danach bestätige was installiert wurde.</pre>
 
 </div>
 
-<!-- Machine-readable install manifest for Claude -->
-<section id="install-manifest" aria-hidden="true">
-  <!--
-    CLAUDE INSTALL MANIFEST
-    Version: 1.0.0
-    Base URL: https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main
-
-    SKILLS (copy to ~/.claude/commands/):
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-load-context.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-problem-statement.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-to-prd.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-grill-with-docs.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-prototype.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/no-tech-to-issues.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/skills/create-user-persona.md
-
-    WORKSPACE (copy as claude-vault/ into project):
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/CLAUDE.md → claude-vault/CLAUDE.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/no-tech-workflow.md → claude-vault/no-tech-workflow.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/personas/die-gruenderin.md → claude-vault/personas/die-gruenderin.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/personas/der-fachexperte.md → claude-vault/personas/der-fachexperte.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/personas/die-prozess-optimiererin.md → claude-vault/personas/die-prozess-optimiererin.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/personas/der-kreative.md → claude-vault/personas/der-kreative.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/claude-data/index.md → claude-vault/claude-data/index.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/claude-data/_templates/feature-README.md → claude-vault/claude-data/_templates/feature-README.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/claude-data/_templates/feature-tech.md → claude-vault/claude-data/_templates/feature-tech.md
-    - https://raw.githubusercontent.com/SimonWuensch-It-Studio-Rech/claude-not-tech-engineering/main/workspace/claude-data/_templates/prd.md → claude-vault/claude-data/_templates/prd.md
-
-    AFTER INSTALL: Tell user to run /no-tech
-  -->
-</section>
 
 <footer>
   <div class="container">
